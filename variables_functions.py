@@ -3,7 +3,6 @@ import math, os
 
 ### FUNCTIONS ###
 
-
 def generate_run_query(
     tablename, columnlist, valuelist, columnlistwithoutpk, excluded_prepend, cursor
 ):
