@@ -9,7 +9,7 @@ For raw data, I use a car sales dataset from Kaggle, and transform it into one f
 ### Dimension Types
 If a row theoretically were to be changed in the raw car data, then it would be a correction to the record and the old record should be discarded. So, I implemented "type 1 slowly changing dimensions," or a traditional upsertion load into the DB.
 ### Installation Steps
-- Create a new environment in your environment manager and run `pip install -r /path/to/requirements.txt`.
+- Create a new environment in your environment manager, navigate to the project directory, and run `pip install -r requirements.txt`.
 - Set the environmental variables referenced in variables_functions.py.
 - Run using `python main.py`. This project is tested in Python 3.10.
 - Run tests with `pytest test.py`.
