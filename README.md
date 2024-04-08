@@ -12,3 +12,4 @@ If a row theoretically were to be changed in the raw car data, then it would be 
 - Create a new environment in your environment manager and run `pip install -r /path/to/requirements.txt`.
 - Set the environmental variables referenced in variables_functions.py.
 - Run using `python main.py`. This project is tested in Python 3.10.
+- Run tests with `pytest test.py`.
