@@ -33,7 +33,6 @@ def checktablecounts(cursor):
     cursor.execute(sql.SQL("select count(*) from carsales"))
     print(str(cursor.fetchone()[0]) + " rows in carsales table!")
 
-
 ### ENVIRONMENTAL VARIABLES ###
 
 bucket_name = os.environ['bucket_name']
