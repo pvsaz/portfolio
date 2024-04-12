@@ -1,7 +1,7 @@
 # Data Portfolio
 ## ETL Pipeline by Purna Shah
 ### Introduction
-This project is an ETL pipeline written in Python that takes raw data in the form of a single CSV (meant to represent a recurring data source) and batch extracts it to multiple CSVs in an AWS S3 bucket. Then, the CSVs in the buckets are transformed and loaded to an AWS RDS PostgreSQL instance.
+This project is an ETL pipeline written in Python that takes raw data in the form of a single CSV (meant to represent a recurring data source) and batch extracts it to multiple CSVs in an AWS S3 bucket. Then, the CSVs in the bucket are transformed and loaded to an AWS RDS PostgreSQL instance.
 ### Choice of Technologies
 In my previous position at 2U, we mostly followed the ELT paradigm. Typical pipelines I worked on used Airflow to extract and load to a Snowflake warehouse and DBT to transform. So, I wanted to try the other common paradigm for this project and build a traditional ETL pipeline. I wrote the pipeline in Python; PySpark and Airflow are good options as well but they don't have an unlimited free option. I wanted to use a production-level warehouse for faster upserts but now that Redshift is off the AWS Free Tier, I chose PostgreSQL for my RDS instance. PostgreSQL is slower than Redshift up to a factor of 1000, so to improve performance on my personal computer I limited the raw CSV to 20000 rows and optimized the code. However, this pipeline design could accommodate high volumes of data with a production-level warehouse.
 ### Data Model
