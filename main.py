@@ -45,8 +45,8 @@ cursor = conn.cursor()
 
 # Because this pipeline loads a flat file, it makes sense to drop the tables every
 # time the pipeline is run. The flat file is a stand-in for a recurring data source,
-# and if we were using a recurring data source instead and upserting values from it,
-# then we would not want to drop the tables every time and instead upsert to existing
+# and if we were using a recurring data source instead and inserting values from it,
+# then we would not want to drop the tables every time and instead insert to existing
 # tables.
 cursor.execute(sql.SQL("drop table if exists cardetails"))
 cursor.execute(sql.SQL("drop table if exists carsales"))
@@ -72,12 +72,13 @@ for num in range(0, object_key):
     # We will convert body type "Coupe" to "2-door coupe."
     df["body"] = df["body"].apply(lambda x: "2-door coupe" if x == "Coupe" else x)
 
-    # Combining VIN and sale datetime to create a composite primary key for upsertion
+    # Combining VIN and sale datetime to create a composite primary key for insertion/update
     df["primarykey"] = df["saledate"].astype(str) + df["vin"]
 
     # If a row theoretically were to be changed in the car data, then it would be a correction to the record and the old record
-    # should be discarded. So, we will implement "type 1 slowly changing dimensions," or a traditional upsert. I am iterating through
-    # the dataframe with the itertuples method instead of iterrows, in addition to using multithreading, for a speed advantage.
+    # should be discarded. So, we will implement "type 1 slowly changing dimensions," or an insertion of new rows with a replacement
+    # of updated rows into the DB. I am iterating through the dataframe with the itertuples method instead of iterrows, in addition 
+    # to using multithreading, for a speed advantage.
 
     for row in df.itertuples():
         threading.Thread(
