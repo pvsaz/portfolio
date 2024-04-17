@@ -7,7 +7,7 @@ In my previous position at 2U, we mostly followed the ELT paradigm. Typical pipe
 ### Data Model
 For raw data, I use a car sales dataset from Kaggle, and transform it into one fact table (car sales) and one dimension table (car details) i.e. a star schema with one "point." A car can be sold multiple times and the dataset does not contain a natural key, so a composite key is made from the VIN and the sale date. The two tables can be joined on their primary keys.
 ### Dimension Types
-If a row theoretically were to be changed in the raw car data, then it would be a correction to the record and the old record should be discarded. So, I implemented "type 1 slowly changing dimensions," or an insertion of new rows with a replacement of updated rows into the DB.
+If a row theoretically were to be changed in the raw car data, then it would be a correction to the record and the old record should be discarded. So, I implemented "type 1 slowly changing dimensions," or a replacement of updated rows when new rows are inserted into the DB.
 ### Installation Steps
 - Create a new environment in your environment manager, navigate to the project directory, and run `pip install -r requirements.txt`.
 - Set the environmental variables referenced in variables_functions.py.
