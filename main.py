@@ -76,12 +76,12 @@ for num in range(0, object_key):
     df["primarykey"] = df["saledate"].astype(str) + df["vin"]
 
     # If a row theoretically were to be changed in the car data, then it would be a correction to the record and the old record
-    # should be discarded. So, we will implement "type 1 slowly changing dimensions," or a replacement of updated rows when 
-    # new rows are inserted into the DB. I am iterating through the dataframe with the itertuples method instead of iterrows, 
-    # in addition to using multithreading, for a speed advantage.
+    # should be discarded. So, we will implement "type 1 slowly changing dimensions," or an insertion of new rows with a replacement
+    # of updated rows into the DB. I am iterating through the dataframe with the itertuples method instead of iterrows, in addition 
+    # to using multithreading, for a speed advantage.
 
     for row in df.itertuples():
-        threading.Thread(
+        cardetailsthread = threading.Thread(
             target=generate_run_query,
             args=(
                 cardetailscolumndict["tablename"],
@@ -91,8 +91,8 @@ for num in range(0, object_key):
                 excardetailscolumnlistnopk,
                 cursor,
             ),
-        ).start()
-        threading.Thread(
+        )
+        carsalesthread = threading.Thread(
             target=generate_run_query,
             args=(
                 carsalescolumndict["tablename"],
@@ -102,7 +102,11 @@ for num in range(0, object_key):
                 excarsalescolumnlistnopk,
                 cursor,
             ),
-        ).start()
+        )
+        cardetailsthread.start()
+        carsalesthread.start()
+        cardetailsthread.join()
+        carsalesthread.join()
         conn.commit()
 
     print(f"{num}.csv transformed and loaded to database!")
